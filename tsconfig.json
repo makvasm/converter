@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+      "outDir": "./src/public/",
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "module": "commonjs",
+      "target": "ES2020",
+      "jsx": "react"
+  }
+}
