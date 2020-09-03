@@ -9,10 +9,13 @@ interface Rates {
 }
 
 export default function Rates() {
-
+  // Курс
   const [rates, setRates] = React.useState({ rates: [] })
+
+  // Базовая валюта
   const [base, setBase] = React.useState("EUR")
 
+  // Обновлять курс при изменении базовой валюты
   React.useEffect(() => {
     fetch(`https://api.exchangeratesapi.io/latest?base=${base}`)
       .then(res => {
@@ -35,12 +38,14 @@ export default function Rates() {
 
       </Form.Control>
 
+        {/* Отображение курса */}
       <div style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr"
       }}>
         <div style={{margin: "auto"}}>{base}</div>
         <div>
+          {/* Проход по всем валютам и отображение их в виде ключ-значение */}
           {Object.entries(rates.rates).map(([key, val], ind) => (
             <div key={ind}>{`${key}: ${val}`}</div>
           ))}

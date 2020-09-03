@@ -24,9 +24,10 @@ export let currs: currs[] = [
 
 export default function Converter() {
 
+  // Конвертировать значения и записать в ридонли инпут
   const convert = () => {
-    let val = parseInt(inptRefFrom.current.value, 10)
-    if (val <= 0) return
+    let val: number = parseInt(inptRefFrom.current.value, 10)
+    if (val <= 0 || !val) return
     fetch(`https://api.exchangeratesapi.io/latest?base=${slctRefFrom.current.value}&symbols=${slctRefTo.current.value}`)
       .then(res => {
         res.json().then(data => {
@@ -35,9 +36,11 @@ export default function Converter() {
       })
   }
 
+  // Рефы селектов
   let slctRefFrom = React.useRef(null)
   let slctRefTo = React.useRef(null)
 
+  // Рефы инпутов
   let inptRefTo = React.useRef(null)
   let inptRefFrom = React.useRef(null)
 
@@ -49,8 +52,8 @@ export default function Converter() {
           <Col>
             <InputGroup>
               <InputGroup.Prepend>
+                {/* Селект со всеми валютами */}
                 <Form.Control as="select" ref={slctRefFrom} defaultValue={"EUR"} >
-
                   {currs.map((value, index) => (
                     <option key={index} title={value.shrt} >{value.name}</option>
                   ))}
@@ -58,6 +61,7 @@ export default function Converter() {
                 </Form.Control>
               </InputGroup.Prepend>
 
+              {/* Количество валюты для конвертации */}
               <Form.Control
                 type="number"
                 min="1"
@@ -69,6 +73,7 @@ export default function Converter() {
             </InputGroup>
           </Col>
 
+          {/* Поменять валюты местами */}
           <img
             className="switch"
             src="/assets/switch.png"
@@ -84,6 +89,7 @@ export default function Converter() {
           <Col>
             <InputGroup>
               <InputGroup.Append>
+                {/* Селект со всеми валютами */}
                 <Form.Control as="select" ref={slctRefTo} onChange={convert}>
 
                   {currs.map((value, index) => (
@@ -93,6 +99,7 @@ export default function Converter() {
                 </Form.Control>
               </InputGroup.Append>
 
+              {/* Результат конвертации */}
               <Form.Control ref={inptRefTo} type="number" readOnly as="input" />
             </InputGroup>
           </Col>
